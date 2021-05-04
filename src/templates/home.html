@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head_title %} Home {% endblock %}
+{% block content %}
+<div class="mb-5 p-5">
+	<br>
+	<div class="col-lg-10 offset-lg-1">
+		<div class="jumbotron">
+			<div class="text-center">
+	        <h1>{{project_name}} | <b><small><small>My LandingHub</small></small></h1>
+	        <h4><a href="{% url 'landinghub_view' %}">{% trans 'Enter' %}</a></h4> 
+	        </div> 
+	      </div>
+	</div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

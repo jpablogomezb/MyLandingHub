@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block head_title %}{{ title }}{% endblock %}
+{% block stylesheets %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/timeline.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/cards.css' %}"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+{% endblock %}
+{% block style %}
+<style>
+.btn-danger{
+  background: #BC353B;
+  border-color: #BC353B;
+
+}
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open > .dropdown-toggle.btn-danger {
+    background: #7D2327;
+    border-color: #7D2327;
+}
+
+.controls input{
+		height: 40px;
+		border: 2px solid #000000;
+		border-radius: 2px;
+	}
+
+	.controls textarea{
+			border: 2px solid #000000;
+			border-radius: 2px;
+			}
+
+  .controls select {
+	 height: 40px;
+	 border: 2px solid #000000;
+	 border-radius: 2px;
+	 -webkit-appearance: none;
+	 -moz-appearance: none;
+	  -o-appearance: none;
+   }
+
+   #info-price {
+     text-align: center;
+     text-transform: none;
+     font-weight: 100;
+     padding: 0px 2px 0px 2px;
+     z-index: 1031;
+     position: absolute;
+     top: 67px;
+     right: 99px;
+     line-height: 40px;
+     letter-spacing: 1px;
+     transform: rotate(40deg);
+     -webkit-transform: rotate(40deg);
+     cursor: default;
+     -moz-user-select: none;
+     -webkit-user-select: none;
+     -ms-user-select: none;
+     box-shadow: 3 3 3px rgba(0,0,0,.3);
+     position: fixed;
+   }
+
+   .resp-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 56.25%;
+  }
+
+  .resp-iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+}
+
+</style>
+{% endblock %}
+{% block chat %}
+{% endblock %}
+{% block content %}
+
+<!-- Info Section -->
+<main role="main">
+  <div class="intro-box text-center">
+        <br>
+        {{ LANGUAGE_CODE }}
+        {% if object.title != None or object.title != '' %}
+        <div class="btn col-lg-12 text-center">
+          <h1 style="text-transform: uppercase;"><b>{{object.title}}</b></h1>
+        </div>
+        {% endif %}
+        {% if object.clock != None or object.price != None %}
+        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+            {%  if object.clock != None %}
+            <h2><b><span id="clock"></span></b></h2>
+            <span style="text-transform: none;" class=""><h3>{% trans 'for this offer to end!' %}</h3 ></span>
+            {% endif %}
+            {% if not object.price == None %}
+            <h3><b><i class="fa fa-usd" aria-hidden="true"></i>{{object.price.amount|floatformat:2}} <small style=color:black>{{object.price.currency}} </small></b></h3>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="col-lg-12 text-center">
+          <br>
+          {% if file == 'iframe' %}
+          <div class="resp-container">
+           <iframe  class="resp-iframe" src="https://docs.google.com/gview?url={{object.file.url}}&embedded=true" frameborder="0"></iframe>
+           </div>
+          {% endif %}
+          {% if file == 'video' %}
+          <div class="resp-container">
+            <video class="resp-iframe" controls autoplay controlsList="nodownload">
+              <source src="{{object.file.url}}" type="{{object.file_type}}">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          {% endif %}
+          {% if file == 'audio' %}
+          <div>
+            <audio controls autoplay controlsList="nodownload">
+              <source src="{{object.file.url}}" type="{{object.file_type}}">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          {% endif %}
+          {% if file == 'image' or file == 'application/x-empty' %}
+          <img src="{{object.file.url}}" alt="imagen" class="img-fluid"/>
+          {% endif %}
+          <br>
+      </div>
+      <br>
+
+  </div>
+<!-- Info Section -->
+<!-- Register Section -->
+  <section class="content-section">
+    <br><br>
+    <div>
+      <div class="col-lg-6 offset-lg-3">
+    			<div class="box">
+    				<div class="icon">
+    					<div class="image"><i class="fa fa-info"></i></div>
+    					<div class="info">
+                <br>
+                <div id="sendinfo">
+          					{% if confirm_message %}
+          						<p style="text-align:center">{{confirm_message}}</p>
+          					{% endif %}
+          					{% if form %}
+                      <h3><b>{{object.title_form}}</b></h3>
+                      <br>
+                      <div style="text-align:left">
+          						<form method="POST" action="#sendinfo">{% csrf_token %}
+          								{{ form | crispy }}
+                        <div style="text-align: center;">
+        								  <input type='submit' class='btn btn-success btn-lg btn-block'  value='{{ btn_submit }} &raquo;'/>
+                        </div>
+          						</form>
+                      </div>
+          					{% endif %}
+          			</div>
+    					</div>
+    				</div>
+    			</div>
+      </div>
+    </div>
+  </section>
+<!-- Register Section -->
+
+<br>
+<br>
+
+<!-- Here starts the modal forms -->
+  <div id="form-modal" class="modal fade bs-example-modal-md" role="dialog" aria-labelledby="myLargeModalLabel" >
+              <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                      <div id="form-modal-body" class="modal-body">
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+  </div>
+<!-- /.modal -->
+</main>
+{% include 'footer.html' %}
+{% endblock %}
+{% block js %}
+<script>
+
+var formAjaxSubmit = function(form, modal) {
+              $(modal).find('.modal-body #landing_id').val({{object.id}});
+              $(form).submit(function (e) {
+                  e.preventDefault();
+                  $.ajax({
+                      type: $(this).attr('method'),
+                      url: $(this).attr('action'),
+                      data: $(this).serialize(),
+                      success: function (xhr, ajaxOptions, thrownError) {
+                          if ( $(xhr).find('.has-error').length > 0 ) {
+                              $(modal).find('.modal-body').html(xhr);
+                              formAjaxSubmit(form, modal);      
+                          } else {
+                              $(modal).modal('toggle');
+                              {% if object.newsletter_popup == 'YNL' %}
+                              bootbox.alert('{% trans "Thank you for signing up for our newsletter, we will keep you updated!" %}')
+                              {% endif %}
+                              {% if object.newsletter_popup == 'YNLD' %}
+                              bootbox.alert('{% trans "We have sent your discount coupon to the email provided." %}')
+                              {% endif %}
+                          }
+                      },
+                      error: function (xhr, ajaxOptions, thrownError) { console.log('modal error!');
+                      }
+                  });
+              });
+            }
+        
+  {% if object.newsletter_popup == 'YNL' %}
+     setTimeout(function() {
+       console.log('modal log1')
+       $('#form-modal-body').load('/newsletter/{{object.id}}/signup/', function () {
+           $('#form-modal').modal('toggle');
+           formAjaxSubmit('#form-modal-body form', '#form-modal');
+           console.log('modal log2')
+         });
+     }, 10000);
+
+   {% endif %}
+ // {% if landing.newsletter_popup == 'YNLD' %}
+ //    setTimeout(function() {
+ //      $('#form-modal-body').load('/newsletter/{{object.id}}/landing/discount/', function () {
+ //          $('#form-modal').modal('toggle');
+ //          formAjaxSubmit('#form-modal-body form', '#form-modal');
+ //        });
+ //    }, 10000);
+ // {% endif %}
+
+  $('#clock').countdown('{{object.clock|date:"Y/m/d"}} {{object.clock|time:"H:i:s"}}')
+    .on('update.countdown', function(event) {
+    var format = '%H:%M:%S';
+  {% if lang_code == 'en'%}  
+    if(event.offset.totalDays > 0) {
+      format = '%-d day%!d ' + format;
+    }
+    if(event.offset.weeks > 0) {
+      format = '%-w weeks%!w ' + format;
+    }
+  {% else %}
+    if(event.offset.totalDays > 0) {
+      format = '%-d día%!d ' + format;
+    }
+    if(event.offset.weeks > 0) {
+      format = '%-w semanas%!w ' + format;
+    }
+  {% endif %}
+
+    $(this).html(event.strftime(format));
+    })
+    .on('finish.countdown', function(event) {
+    $(this).html('{% trans "There is very little time left" %}')
+      .parent().addClass('disabled');
+  });
+</script>
+{% endblock%}

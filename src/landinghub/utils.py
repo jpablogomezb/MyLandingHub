@@ -1,0 +1,34 @@
+# -*- encoding: utf-8 -*-
+from __future__ import unicode_literals
+from django.utils.text import slugify
+import random, string, magic
+
+def check_in_memory_mime(in_memory_file):
+    mime = magic.from_buffer(in_memory_file.read(), mime=True)
+    return mime
+
+def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+    
+def unique_slug_generator(instance, new_slug=None):
+    """
+    This is for a Django project and it assumes your instance 
+    has a model with a slug field and a title character (char) field.
+    """
+    if new_slug is not None:
+        slug = new_slug
+    else:
+        try:
+            slug = slugify(instance.title)
+        except:
+            slug = slugify(instance.name)
+
+    Klass = instance.__class__
+    qs_exists = Klass.objects.filter(slug=slug).exists()
+    if qs_exists:
+        new_slug = "{slug}-{randstr}".format(
+                    slug=slug,
+                    randstr=random_string_generator(size=4)
+                )
+        return unique_slug_generator(instance, new_slug=new_slug)
+    return slug

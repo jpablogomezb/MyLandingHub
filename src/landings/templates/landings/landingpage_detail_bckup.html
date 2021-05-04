@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Item</h1>
+<p>
+	{{object.title}}
+<br>
+{% if object.price != None and object.price != '' %}
+	{{object.price}}
+{% endif %}
+
+</p>
+{% endblock %}

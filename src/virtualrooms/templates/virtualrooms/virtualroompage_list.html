@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block head_title %} {{title}} {% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<br>
+<main role="main">
+	<div class="jumbotron">
+			<div class="text-center">
+	        	<h3>{% trans 'Virtual Rooms' %}:</h3> 
+	        	<h4><small>
+	        		<a href="{% url 'virtualrooms:virtualroom-create' %}">{% trans 'Create New' %}</a>
+	        	</small></h4>
+	        </div>
+	  		<br>
+	        <div>
+			<ul class="list-group">
+			{% for object in object_list %}
+			  <li class="list-group-item">
+			   <h4>{{object.name}}</h4>
+			   <small><a href="{% url 'virtualrooms:virtualroom-detail' object.slug %}"><b>{% trans 'See Room' %}</b></a> | <a href="{% url 'virtualrooms:virtualroom-update' object.id %}"><b>{% trans 'Edit' %}</b></a> | <a href="{% url 'virtualrooms:virtualroom-delete' object.id %}"><b>{% trans 'Delete' %}</b></a> | <a href="{% url 'virtualrooms:virtualroom-materials' object.id %}">{% trans 'Supporting Material' %}</a></small>
+			  </li>
+			{% endfor %}
+			</ul>
+			</div>
+	</div>
+{% include 'footer.html' %} 
+</main>
+{% endblock %}

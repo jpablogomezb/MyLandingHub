@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block head_title %} {{title}} {% endblock %}
+{% block stylesheets %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+{% include "navbar.html" %}
+  <div class="jumbotron">
+    <div class="text-center">
+        <h3>{{ title_action }}</h3>
+        <br>
+    </div>
+    <div class="row">
+  		<div class="panel panel-default">
+
+          <div class="panel-body">
+            {% if form %}
+            {{ form.media }}
+             <form id="landing_edit_form" method="POST" class="form" role="form" action="" enctype="multipart/form-data">{% csrf_token %}
+              {% crispy form  %}
+              <br>
+              <input type='submit' style="float:right;" value= "{% trans 'Guardar' %}&raquo;" class='btn btn-default btn-md'></input>
+              <a href="{% url 'landings:landing-list' %}"  style="float:left;" class="btn btn-default btn-xs">&laquo; {% trans 'Mis Landing Page'%}</a>
+            </form>
+            {% endif %}
+          </div>
+  		  	
+          <div id="spinner_tool" class="spinner text-center" style="display:none;">
+            <i class="fa fa-spin fa-spinner fa-4x"></i>
+            <br><br>
+            <span class="label label-large label-info arrowed-in-right arrowed-in">
+              Loading...
+            </span>
+          </div>
+  		</div>
+      
+    </div>
+  </div>
+<br>
+<div class="row">
+{% include 'footer.html' %}
+</div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$(document).ready(function(){
+  // if ($('#id_newsletter_popup').val() == 'NO' || $('#id_newsletter_popup').val() == 'YNL') {
+  //     $("#newsletter_discount").hide();
+  //   }
+
+  //   if ($('#id_newsletter_popup').val() == 'YNLD'){
+  //     $("#newsletter_discount").show();
+  //   }
+
+  //   $('#id_newsletter_popup').change(function() {
+  //     var target = $('#id_newsletter_popup option:selected').val();
+  //     if(target == "NO" || target == "YNL"){
+  //         $("#newsletter_discount").hide();
+  //         }
+  //     else if (target == "YNLD"){
+  //         $("#newsletter_discount").show();
+  //         }
+  //   });
+
+
+    $('#landing_edit_form').submit(function() {
+      $('#spinner_tool').show()
+    });
+
+});
+</script>
+{% endblock %}

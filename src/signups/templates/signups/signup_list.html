@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block head_title %} {{title}} {% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<br>
+<main role="main">
+	<div class="jumbotron">
+			<div class="text-center">
+	        	<h4><b>{% trans 'Newsletter subscriptions in' %}</b> <br>{{landing}}</h4> 
+	        </div>
+	  		<br>
+	        <div>
+	        <div class="table-responsive">
+	        {% if object_list %}
+			<table class="table table-bordered table-sm text-center">
+			  <thead>
+			    <tr>
+			      <th scope="col">{% trans 'E-mail' %}</th>
+			      <th scope="col">{% trans 'Name' %} </th>
+			      <th scope="col">{% trans 'Phone Number' %}</th>
+			      <th scope="col">{% trans 'When?' %}</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  	{% for object in object_list %}
+			    <tr>
+			      <td>{{object.email}}</td>
+			      <td>{{object.name|default_if_none:"--"}}</td>
+			      <td>{{object.phone_number|default_if_none:"--"}}</td>
+			      <td>{{object.timestamp}}</td>
+			    </tr>
+			    {% endfor %}
+			  </tbody>
+			</table>			
+			{% else %}
+			<h6 class="text-center"><b>{% trans 'Sorry, no subscribers via this Landing Page.' %}</b></h6>
+			{% endif %}
+		 </div>
+		 </div>
+	</div>
+	
+{% include 'footer.html' %} 
+</main>
+{% endblock %}

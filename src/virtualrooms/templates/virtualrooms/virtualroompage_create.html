@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block head_title %} {{title}} {% endblock %}
+{% block stylesheets %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+{% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<br>
+<main role="main">
+  <div class="jumbotron">
+    <div class="text-center">
+        <h3>{{ title_action }}</h3>
+    </div>
+    <br>
+  		<div class="panel panel-default">
+          <div class="panel-body">
+            {% if form %}
+            {{ form.media }}
+             <form method="POST" class="form" role="form" action="" enctype="multipart/form-data">{% csrf_token %}
+              {% crispy form  %}
+              <br>
+              <input type='submit' style="float:right;" value= "{% trans 'Save' %} &raquo;" class='btn btn-primary btn-lg'></input>
+              <a href="{% url 'virtualrooms:virtualroom-list' %}"  style="float:left;" class="btn btn-primary btn-sm">&laquo; {% trans 'My Virtual Rooms'%}</a>
+            </form>
+            {% endif %}
+          </div>
+  		  	
+          <div id="spinner_tool" class="spinner text-center" style="display:none;">
+            <i class="fa fa-spin fa-spinner fa-4x"></i>
+            <br><br>
+            <span class="label label-large label-info arrowed-in-right arrowed-in">
+              Loading...
+            </span>
+          </div>
+  		</div>
+   </div>
+{% include 'footer.html' %} 
+</main>
+{% endblock %}
+{% block js %}
+{% endblock %}

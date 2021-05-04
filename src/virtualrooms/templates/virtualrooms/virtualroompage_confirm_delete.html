@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head_title %} {{title}} {% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<div class="mb-5 p-5">
+	<br>
+	<div class="col-lg-10 offset-lg-1">
+		<div class="jumbotron text-center">
+			<form action='.' method="POST">{% csrf_token %}
+				<h2>{% trans 'Are you sure you want to delete' %} <b>{{object.name}}</b>?</h2><br>
+				<p><input type="submit" class="btn btn-primary" value={% trans 'Yes' %} name=""> 
+					<a href="../../all">{% trans 'Cancel' %}</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+

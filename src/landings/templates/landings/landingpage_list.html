@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block head_title %} {{title}} {% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<br>
+<main role="main">
+	<div class="jumbotron">
+			<div class="text-center">
+	        	<h3>Landing Pages:</h3> 
+	        	<h4><small>
+	        		<a href="{% url 'landings:landing-create' %}">{% trans 'Create New' %}</a>
+	        	</small></h4>
+	        </div>
+	  		<br>
+	        <div>
+			<ul class="list-group">
+			{% for object in object_list %}
+			  <li class="list-group-item">
+			   <h5>{{object.title}}</h5>
+			   <small><a href="{% url 'landings:landing-detail' object.slug %}"><b>{% trans 'See Landing' %}</b></a> | <a href="{% url 'landings:landing-update' object.id %}"><b>{% trans 'Edit Landing' %}</b></a> | <a href="{% url 'landings:landing-delete' object.id %}"><b>{% trans 'Delete Landing' %}</b></a> | <a href="{% url 'moreinfos:moreinfo-list' object.id %}">{% trans 'Needs more info.' %}</a> | <a href="{% url 'signups:newsletter-subscriptions' object.id %}">{% trans 'Newsletter subscriptions' %}</a></small>
+			  </li>
+			{% endfor %}
+			</ul>
+		 </div>
+	</div>
+	
+{% include 'footer.html' %} 
+</main>
+{% endblock %}

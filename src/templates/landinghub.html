@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head_title %} LandingHub {% endblock %}
+{% block content %}
+<div class="mb-5 p-5">
+<div class="container">
+	<h2 class="text-center"><b>{% trans 'My' %} My LandingHub</b></h2>
+	<h5 class="text-center">{{project_name}}</h5>
+	<br>
+  <div class="row">
+    <div class="col col-lg-4 offset-lg-2">
+   		  <div class="jumbotron">
+			<div class="text-center">
+	        <h3><a href="{% url 'landings:landing-list' %}">Landing Pages</h3></a>
+	        </div> 
+	      </div>
+    </div>
+
+    <div class="col col-lg-4">
+    	<div class="jumbotron">
+			<div class="text-center">
+	        <h3><a href="{% url 'virtualrooms:virtualroom-list' %}">{% trans 'Virtual Rooms' %}</h3></a>
+	        </div> 
+	      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
