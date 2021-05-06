@@ -3,10 +3,12 @@ from __future__ import unicode_literals
 import datetime
 from datetime import timedelta, date
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from datetimewidget.widgets import DateWidget, TimeWidget, DateTimeWidget
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field, HTML
-from .models import VirtualRoomPage, SessionMaterial
+
+from .models import VirtualRoomPage, SessionMaterial, AttendeeVroom
 
 class VirtualRoomPageForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -23,6 +25,7 @@ class VirtualRoomPageForm(forms.ModelForm):
 			Div('clock', css_class='col-md-12'),
 			HTML("<hr>"),
 			Div('online_room_url', css_class='col-md-12'),
+			Div('attendee_info', css_class='col-md-12'),
 		)
 
 	class Meta:
@@ -34,7 +37,7 @@ class VirtualRoomPageForm(forms.ModelForm):
 			'hour_from',
 			'clock',
 			'online_room_url',
-			#'newsletter_discount'
+			'attendee_info',
 		]
 		date2=datetime.datetime.now().date() + datetime.timedelta(days=5*30)
 		dateOptions = {
@@ -78,6 +81,20 @@ class VirtualRoomMaterialUploaForm(forms.ModelForm):
 		fields = ['file', 'file_name', 'file_description', 'active']
 		widgets = {
 		  'file_description': forms.Textarea(attrs={'rows':1}),
+		}
+
+
+class VirtualRoomAttendeeForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(VirtualRoomAttendeeForm, self).__init__(*args, **kwargs)
+		self.fields['email'].widget.attrs.update({'required': 'required'})
+		self.fields['name'].label = _("Name:")
+
+	class Meta:
+		model = AttendeeVroom
+		fields = ['name','email']
+		widgets = {
+			'email': forms.TextInput(attrs={'placeholder': 'abc@email.com'}),
 		}
 	
 		

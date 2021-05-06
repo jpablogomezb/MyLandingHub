@@ -66,6 +66,17 @@
 
    
     {% endif %}
+
+  <!-- Here starts the modal forms -->
+  <div id="form-modal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" >
+              <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                      <div id="form-modal-body" class="modal-body">
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+  </div>
+<!-- /.modal -->
    	
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
@@ -80,6 +91,45 @@
     </footer>
 {% endblock %}
 {% block js %}
+
+{% if object.attendee_info == True %}
+<script type="text/javascript">
+  var formAjaxSubmit = function(form, modal) {
+              $(modal).find('.modal-body #landing_id').val({{object.id}});
+              $(form).submit(function (e) {
+                  e.preventDefault();
+                  $.ajax({
+                      type: $(this).attr('method'),
+                      url: $(this).attr('action'),
+                      data: $(this).serialize(),
+                      success: function (xhr, ajaxOptions, thrownError) {
+                          if ( $(xhr).find('.has-error').length > 0 ) {
+                              $(modal).find('.modal-body').html(xhr);
+                              formAjaxSubmit(form, modal);      
+                          } else {
+                              $(modal).modal('toggle');
+                              
+                              bootbox.alert('{% trans "Thank you! Please click on the button to go to the virtual room and remember to check if there are any supporting materials for the session." %}')
+                          }
+                      },
+                      error: function (xhr, ajaxOptions, thrownError) { console.log('modal error!');
+                      }
+                  });
+              });
+            }
+        
+
+     setTimeout(function() {
+       console.log('modal log1')
+       $('#form-modal-body').load('/virtual-rooms/{{object.id}}/attendee/signup/', function () {  
+           $('#form-modal').modal('toggle');
+           formAjaxSubmit('#form-modal-body form', '#form-modal');
+           console.log('modal log2')
+         });
+     }, 1000);
+</script>
+{% endif %}
+
   <script src="{% static 'js/virtualrooms/jquery.min.js' %}"></script>
   <script src="{% static 'js/virtualrooms/jquery-migrate-3.0.1.min.js' %}"></script>
   <script src="{% static 'js/virtualrooms/jquery.waypoints.min.js' %}"></script>
@@ -91,6 +141,7 @@
   <script src="{% static 'js/virtualrooms/main.js' %}"></script>
 
   <script type="text/javascript">
+
 	function makeTimer() {
 		var endTime = new Date('{{object.datetime_from|date:"Y/m/d"}} {{object.datetime_from|time:"H:i:s"}}');
 		endTime = (Date.parse(endTime) / 1000);

@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from .views import (
 	virtualroom_page,
+    VirtualRoomAttendeeSignupView,
+    VirtualRoomAttendeeListView,
 	#VirtualRoomPageDetailView,
 	VirtualRoomPageListView,
 	VirtualRoomPageCreateView,
@@ -26,7 +28,8 @@ urlpatterns = [
     path('<int:pk>/upload/material/', VirtualRoomMaterialUploadView.as_view(), name='virtualroom-materials'),
     path('<int:pk>/delete/', VirtualRoomPageDeleteView.as_view(), name='virtualroom-delete'),
     path('<slug:slug>/', virtualroom_page, name='virtualroom-detail'),
-    #path('<slug:slug>/', LandingPageDetailView.as_view(), name='landing-detail'),
+    path('<int:pk>/attendee/signup/', VirtualRoomAttendeeSignupView.as_view(), name='attendee-signup'),
+    path('<int:pk>/attendees/', VirtualRoomAttendeeListView.as_view(), name='attendees-list'),
     path('active/material/', active_session_material_post, name='ajax-active-session-material'),
     path('inactive/material/', inactive_session_material_post, name='ajax-inactive-session-material'),
     path('delete/material/', delete_session_material_post, name='ajax-delete-session-material'),

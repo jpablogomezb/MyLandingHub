@@ -1,3 +1,4 @@
+import datetime
 from uuid import uuid4
 from django.db import models
 from django.conf import settings
@@ -7,27 +8,23 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from djmoney.models.fields import MoneyField
-
 from landinghub.utils import unique_slug_generator
-
-import datetime
+from attendees.models import Attendee
 
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
-
 class VirtualRoomPage(models.Model):
 	owner = models.ForeignKey(User, verbose_name=_('user'), on_delete=models.CASCADE) # class_instance.model_set.all() #Check CFE Django User model unleashed
 	name = models.CharField(_('activity / event name'), max_length=150, help_text=_('Name or title of the activity, event, or session.'))
 	facilitator = models.CharField(_('facilitator / exhibitor'), max_length=150, blank=True, help_text=_('Name of Facilitator/Exhibitor (you can leave blank).'))
-	#title_form = models.CharField(_('form title'), max_length=100, help_text=_('Title for the contact form.'), default='DO YOU WANT MORE INFORMATION?')
 	slug = models.SlugField(blank=True, null=False, unique=True, max_length=200)
 	date = models.DateField(_('date'), help_text=_('Scheduled date.'), null=False, blank=False)
 	hour_from = models.TimeField(_('start time'), help_text=_('Time at which the session is scheduled to begin.'), null=False, blank=False)
-	clock = models.BooleanField(verbose_name=_('date/time countdown'), help_text=_('Countdown to the start of the activity.'), default=True)
-	#clock = models.DateTimeField(_('Fecha y hora para cuenta regresiva'), help_text=_('Utiliza este campo sólo si deseas que se muestre una cuenta regresiva.'), blank=True, null=True)
+	clock = models.BooleanField(verbose_name=_('date/time countdown?'), help_text=_('Countdown to the start of the activity.'), default=True)
 	datetime_from = models.DateTimeField(null=True, blank=True)
 	online_room_url = models.URLField(_('online room link'), max_length=250, null=False, blank=False, help_text=_('Web link (URL) to the virtual room where the online activity takes place.'))
+	attendee_info = models.BooleanField(_('Attendee info?'), help_text=_('Requests the e-mail address and name of the attendee to access the page.'), default=True)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -35,7 +32,7 @@ class VirtualRoomPage(models.Model):
 		return 'Virtual Room Page: %s' %(self.name)
 
 	def get_absolute_url(self):
-	  return reverse("virtualrooms:virtualroom-detail", kwargs={"slug":self.slug}) #f"/landings/{self.slug}/"
+	  return reverse("virtualrooms:virtualroom-detail", kwargs={"slug":self.slug})
 
 	class Meta:
 	    ordering = ["-timestamp", "-updated"]
@@ -61,8 +58,15 @@ class SessionMaterial(models.Model):
 	class Meta:
 	    ordering = ["-timestamp", "-updated"]
 
-	# def get_absolute_url(self):
-	#   return reverse("landings:landing-detail", kwargs={"slug":self.slug}) #f"/landings/{self.slug}/"
+class AttendeeVroom(Attendee):
+	session = models.ForeignKey(VirtualRoomPage, null=True, on_delete=models.SET_NULL, related_name='attendees')
+
+	def __str__(self):
+		if self.name:
+			return  "%s -%s" %(self.email, self.name)
+		else:
+			return self.email
+
 
 def virtualroompage_pre_save_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:

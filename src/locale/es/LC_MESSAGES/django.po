@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-24 14:30-0500\n"
+"POT-Creation-Date: 2021-05-06 15:27-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: landinghub/settings/local.py:168
+#: attendees/forms.py:11 signups/forms.py:14 virtualrooms/forms.py:91
+msgid "Name:"
+msgstr "Nombre"
+
+#: attendees/models.py:8 landings/models.py:26 moreinfos/models.py:10
+#: virtualrooms/models.py:18
+msgid "user"
+msgstr "usuario"
+
+#: attendees/models.py:9 moreinfos/models.py:11 signups/models.py:7
+msgid "name"
+msgstr "nombre"
+
+#: attendees/models.py:11 moreinfos/models.py:13 signups/models.py:8
+msgid "phone number (cell)"
+msgstr "número de teléfono (móvil)"
+
+#: landinghub/production.py:175 landinghub/settings.py:173
 msgid "English"
 msgstr "Inglés"
 
-#: landinghub/settings/local.py:169
+#: landinghub/production.py:176 landinghub/settings.py:174
 msgid "Spanish"
 msgstr "Español"
 
 #: landings/models.py:21
 msgid "Yes. Newsletter"
 msgstr "Sí. Newsletter"
-
-#: landings/models.py:26 moreinfos/models.py:10 virtualrooms/models.py:20
-msgid "user"
-msgstr "usuario"
 
 #: landings/models.py:27
 msgid "landing page header"
@@ -50,7 +63,7 @@ msgstr "título del formulario"
 msgid "Title for the contact form."
 msgstr "Título para el formulario de contacto."
 
-#: landings/models.py:30 virtualrooms/models.py:27
+#: landings/models.py:30
 msgid "date/time countdown"
 msgstr "cuenta atrás de la fecha/hora"
 
@@ -66,7 +79,7 @@ msgstr "precio a mostrar"
 msgid "Use this field only if you want a price to be displayed."
 msgstr "Utiliza este campo sólo si deseas que se muestre un precio."
 
-#: landings/models.py:32 virtualrooms/models.py:50
+#: landings/models.py:32 virtualrooms/models.py:47
 msgid "file"
 msgstr "archivo"
 
@@ -74,7 +87,9 @@ msgstr "archivo"
 msgid ""
 "Upload main file to show in the Landing Page (pdf, ppt, image, video, mp3, "
 "etc.)."
-msgstr "Sube el archivo principal que se mostrará en la Landing Page (pdf, ppt, imagen, vídeo, mp3, etc.)."
+msgstr ""
+"Sube el archivo principal que se mostrará en la Landing Page (pdf, ppt, "
+"imagen, vídeo, mp3, etc.)."
 
 #: landings/models.py:34
 msgid "Newsletter subscription pop-up window?"
@@ -98,62 +113,64 @@ msgid "Yes"
 msgstr "Sí"
 
 #: landings/templates/landings/landingpage_confirm_delete.html:13
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:140
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:189
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:238
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:129
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:178
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:227
 #: virtualrooms/templates/virtualrooms/virtualroompage_confirm_delete.html:13
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: landings/templates/landings/landingpage_create.html:23
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:84
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:73
 #: virtualrooms/templates/virtualrooms/virtualroompage_create.html:24
 msgid "Save"
 msgstr "Guardar"
 
 #: landings/templates/landings/landingpage_create.html:24
-#: templates/navbar.html:13
+#: moreinfos/templates/moreinfos/moreinfo_list.html:44
+#: signups/templates/signups/signup_list.html:42 templates/navbar.html:13
 msgid "My Landing Pages"
 msgstr "Mis Landing Pages"
 
-#: landings/templates/landings/landingpage_detail.html:106
+#: landings/templates/landings/landingpage_detail.html:108
 msgid "for this offer to end!"
 msgstr "¡para que esta oferta termine!"
 
-#: landings/templates/landings/landingpage_detail.html:214
+#: landings/templates/landings/landingpage_detail.html:216
 msgid "Thank you for signing up for our newsletter, we will keep you updated!"
 msgstr "Gracias por suscribirte a nuestro boletín, te mantendremos informado."
 
-#: landings/templates/landings/landingpage_detail.html:217
+#: landings/templates/landings/landingpage_detail.html:219
 msgid "We have sent your discount coupon to the email provided."
-msgstr "Hemos enviado tu cupón de descuento al correo electrónico proporcionado."
+msgstr ""
+"Hemos enviado tu cupón de descuento al correo electrónico proporcionado."
 
-#: landings/templates/landings/landingpage_detail.html:259
+#: landings/templates/landings/landingpage_detail.html:271
 msgid "There is very little time left"
 msgstr "Queda muy poco tiempo"
 
-#: landings/templates/landings/landingpage_list.html:13
+#: landings/templates/landings/landingpage_list.html:24
 #: virtualrooms/templates/virtualrooms/virtualroompage_list.html:13
 msgid "Create New"
 msgstr "Crear Nueva"
 
-#: landings/templates/landings/landingpage_list.html:22
+#: landings/templates/landings/landingpage_list.html:33
 msgid "See Landing"
 msgstr "Ver Landing"
 
-#: landings/templates/landings/landingpage_list.html:22
+#: landings/templates/landings/landingpage_list.html:33
 msgid "Edit Landing"
 msgstr "Editar Landing"
 
-#: landings/templates/landings/landingpage_list.html:22
+#: landings/templates/landings/landingpage_list.html:33
 msgid "Delete Landing"
 msgstr "Eliminar Landing"
 
-#: landings/templates/landings/landingpage_list.html:22
+#: landings/templates/landings/landingpage_list.html:33
 msgid "Needs more info."
 msgstr "Necesita más información"
 
-#: landings/templates/landings/landingpage_list.html:22
+#: landings/templates/landings/landingpage_list.html:33
 msgid "Newsletter subscriptions"
 msgstr "Subscripciones Boletín"
 
@@ -166,13 +183,13 @@ msgid "Update"
 msgstr "Actualizar"
 
 #: landings/views.py:146
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:62
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:51
 #: virtualrooms/templates/virtualrooms/virtualroompage_list.html:22
-#: virtualrooms/views.py:146
+#: virtualrooms/views.py:140
 msgid "Delete"
 msgstr "Eliminar"
 
-#: landings/views.py:187 virtualrooms/views.py:175
+#: landings/views.py:187 virtualrooms/views.py:164
 #, python-format
 msgid "%s"
 msgstr "%s"
@@ -185,7 +202,7 @@ msgstr "Interesado en"
 msgid "Information Request"
 msgstr "Solicitud de Información"
 
-#: landings/views.py:217 signups/views.py:93
+#: landings/views.py:217 signups/views.py:92
 msgid "Best regards"
 msgstr "Saludos cordiales"
 
@@ -197,14 +214,6 @@ msgstr ""
 "¡Gracias por tu interés!<br><b>Nos pondremos en contacto con contigo lo "
 "antes posible.</b>"
 
-#: moreinfos/models.py:11 signups/models.py:7
-msgid "name"
-msgstr "nombre"
-
-#: moreinfos/models.py:13 signups/models.py:8
-msgid "phone number (cell)"
-msgstr "número de teléfono (móvil)"
-
 #: moreinfos/models.py:14 signups/models.py:9
 msgid "product ID."
 msgstr "ID. producto"
@@ -215,17 +224,20 @@ msgstr "Más información sobre"
 
 #: moreinfos/templates/moreinfos/moreinfo_list.html:20
 #: signups/templates/signups/signup_list.html:20
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:31
 msgid "E-mail"
 msgstr "Correo Electrónico"
 
 #: moreinfos/templates/moreinfos/moreinfo_list.html:21
 #: signups/templates/signups/signup_list.html:21
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:40
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:32
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:29
 msgid "Name"
 msgstr "Nombre"
 
 #: moreinfos/templates/moreinfos/moreinfo_list.html:22
 #: signups/templates/signups/signup_list.html:22
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:33
 msgid "Phone Number"
 msgstr "Número de teléfono"
 
@@ -235,6 +247,7 @@ msgstr "Usuario"
 
 #: moreinfos/templates/moreinfos/moreinfo_list.html:24
 #: signups/templates/signups/signup_list.html:23
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:34
 msgid "When?"
 msgstr "¿Cuándo?"
 
@@ -247,10 +260,6 @@ msgstr "Lo sentimos, no hay suscriptores a través de esta Landing Page"
 msgid "More Information"
 msgstr "Más Información"
 
-#: signups/forms.py:14
-msgid "Name:"
-msgstr "Nombre"
-
 #: signups/templates/signups/newsletter_popup_form_inner.html:8
 msgid "x"
 msgstr "x"
@@ -259,7 +268,7 @@ msgstr "x"
 msgid "Newsletter subscriptions in"
 msgstr "Suscripciones al boletín en"
 
-#: signups/views.py:59
+#: signups/views.py:58
 msgid ""
 "Receive exclusive discounts and information about new products and "
 "promotions!"
@@ -267,7 +276,7 @@ msgstr ""
 "Recibe descuentos exclusivos e información sobre nuevos productos y "
 "promociones."
 
-#: signups/views.py:60
+#: signups/views.py:59
 msgid ""
 "By subscribing to the Newsletter we will notify you of special discounts and "
 "new product launches"
@@ -275,27 +284,27 @@ msgstr ""
 "Al suscribirse al boletín de noticias, te informaremos de los descuentos "
 "especiales y del lanzamiento de nuevos productos"
 
-#: signups/views.py:61
+#: signups/views.py:60
 msgid "I'm interested!"
 msgstr "¡Estoy interesado!"
 
-#: signups/views.py:90
+#: signups/views.py:89
 msgid "New Newsletter subscriber"
 msgstr "Nuevo suscriptor al boletín de noticias"
 
-#: signups/views.py:92
+#: signups/views.py:91
 msgid "New subscriber!"
 msgstr "¡Nuevo suscriptor!"
 
-#: signups/views.py:102
+#: signups/views.py:101
 msgid "Thank you for subscribing"
 msgstr "Gracias por subscribirte"
 
-#: signups/views.py:103
+#: signups/views.py:102
 msgid "Welcome to our Newsletter!"
 msgstr "¡Bienvenido a nuestro boletín de noticias!"
 
-#: signups/views.py:104
+#: signups/views.py:103
 msgid ""
 "We will keep you updated with the latest news and updates, and you will "
 "receive the exclusive discounts we have for you."
@@ -303,14 +312,14 @@ msgstr ""
 "Te mantendremos al tanto de las últimas novedades y actualizaciones, y "
 "recibirás descuentos exclusivos que tenemos para ti."
 
-#: signups/views.py:120
+#: signups/views.py:119
 msgid "Newsletter Subscriptions"
 msgstr "Suscripciones al boletín de noticias"
 
 #: templates/account/login.html:4 templates/account/login.html:12
 #: templates/account/login.html:42
 msgid "Sign In"
-msgstr "Registrarse"
+msgstr "Iniciar Sesión"
 
 #: templates/account/login.html:15
 #, python-format
@@ -386,9 +395,10 @@ msgid "Mis Landing Page"
 msgstr ""
 
 #: templates/navbar.html:16
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:85
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:53
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:74
 #: virtualrooms/templates/virtualrooms/virtualroompage_create.html:25
-#: virtualrooms/views.py:161
+#: virtualrooms/views.py:154
 msgid "My Virtual Rooms"
 msgstr "Mis Salas Virtuales"
 
@@ -420,65 +430,82 @@ msgstr "Materiales Activo"
 msgid "Inactive Material."
 msgstr "Material Inactivo."
 
-#: virtualrooms/models.py:21
+#: virtualrooms/models.py:19
 msgid "activity / event name"
 msgstr "nombre de la actividad / evento"
 
-#: virtualrooms/models.py:21
+#: virtualrooms/models.py:19
 msgid "Name or title of the activity, event, or session."
 msgstr "Nombre o título de la actividad, evento o sesión."
 
-#: virtualrooms/models.py:22
+#: virtualrooms/models.py:20
 msgid "facilitator / exhibitor"
 msgstr "facilitador / expositor"
 
-#: virtualrooms/models.py:22
+#: virtualrooms/models.py:20
 msgid "Name of Facilitator/Exhibitor (you can leave blank)."
 msgstr "Nombre del Facilitador/Expositor (puedes dejarlo en blanco)."
 
-#: virtualrooms/models.py:25
+#: virtualrooms/models.py:22
 msgid "date"
 msgstr "fecha"
 
-#: virtualrooms/models.py:25
+#: virtualrooms/models.py:22
 msgid "Scheduled date."
 msgstr "Fecha prevista."
 
-#: virtualrooms/models.py:26
+#: virtualrooms/models.py:23
 msgid "start time"
 msgstr "hora de inicio"
 
-#: virtualrooms/models.py:26
+#: virtualrooms/models.py:23
 msgid "Time at which the session is scheduled to begin."
 msgstr "Hora a la que está previsto que comience la sesión."
 
-#: virtualrooms/models.py:27
+#: virtualrooms/models.py:24
+#, fuzzy
+#| msgid "date/time countdown"
+msgid "date/time countdown?"
+msgstr "cuenta atrás de la fecha/hora"
+
+#: virtualrooms/models.py:24
 msgid "Countdown to the start of the activity."
 msgstr "Cuenta atrás para el inicio de la actividad."
 
-#: virtualrooms/models.py:30
+#: virtualrooms/models.py:26
 msgid "online room link"
 msgstr "enlace de la sala online"
 
-#: virtualrooms/models.py:30
+#: virtualrooms/models.py:26
 msgid ""
 "Web link (URL) to the virtual room where the online activity takes place."
 msgstr ""
 "Enlace web (URL) a la sala virtual donde se desarrolla la actividad en línea."
 
-#: virtualrooms/models.py:50
+#: virtualrooms/models.py:27
+msgid "Attendee info?"
+msgstr "Información del asistente"
+
+#: virtualrooms/models.py:27
+msgid ""
+"Requests the e-mail address and name of the attendee to access the page."
+msgstr ""
+"Solicitar la dirección de correo electrónico y el nombre del asistente para "
+"acceder a la página."
+
+#: virtualrooms/models.py:47
 msgid "Upload the support material file."
 msgstr "Sube el archivo de material de apoyo."
 
-#: virtualrooms/models.py:52
+#: virtualrooms/models.py:49
 msgid "material (file) name"
 msgstr "nombre del material (archivo)"
 
-#: virtualrooms/models.py:53
+#: virtualrooms/models.py:50
 msgid "material (file) description"
 msgstr "descripción del material (archivo)"
 
-#: virtualrooms/models.py:53
+#: virtualrooms/models.py:50
 msgid ""
 "Describe or explain what the support material consists of (you can leave "
 "blank)."
@@ -486,81 +513,95 @@ msgstr ""
 "Describe o explica en qué consiste el material de apoyo (puedes dejarlo en "
 "blanco)."
 
-#: virtualrooms/models.py:54
+#: virtualrooms/models.py:51
 msgid "active material?"
 msgstr "¿Material activo?"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:25
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:22
+#, fuzzy
+#| msgid "Attendees Resgistrations for"
+msgid "Attendees Registrations for"
+msgstr "Registro de Asistentes para"
+
+#: virtualrooms/templates/virtualrooms/attendeevroom_list.html:49
+msgid ""
+"Sorry, there were no attendees registered through this virtual room access "
+"page"
+msgstr ""
+"Lo sentimos, no hay asistentes registrados a través de esta página de acceso "
+"a sala virtual"
+
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:14
 #: virtualrooms/templates/virtualrooms/virtualroompage_list.html:22
-#: virtualrooms/views.py:212
+#: virtualrooms/views.py:193
 msgid "Supporting Material"
 msgstr "Material de Apoyo"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:39
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:28
 msgid "Material"
 msgstr "Material"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:41
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:30
 msgid "Description"
 msgstr "Descripción"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:42
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:31
 msgid "Currently available?"
 msgstr "¿Actualmente disponible?"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:50
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:39
 msgid "See"
 msgstr "Ver"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:53
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:42
 msgid "Yes,No"
 msgstr "Sí, No"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:57
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:46
 msgid "Active"
 msgstr "Activo"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:59
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:48
 msgid "Inactive"
 msgstr "Inactivo"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:77
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:66
 msgid ""
 "Upload the file, indicate the name and description of the supporting material"
 msgstr ""
 "Sube el archivo, indique el nombre y la descripción del material de apoyo"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:136
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:125
 msgid "Active Material?"
 msgstr "¿Material Activo?"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:137
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:126
 msgid "This material will be available for download. Confirm to validate:"
 msgstr ""
 "Este material estará disponible para su descarga. Confirmar para validar:"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:144
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:193
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:242
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:133
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:182
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:231
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:185
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:174
 msgid "Inactive Material?"
 msgstr "¿Material Inactivo?"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:186
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:175
 msgid ""
 "This material will not be available for download, please confirm to validate:"
 msgstr ""
 "Este material no estará disponible para su descarga, por favor confirme para "
 "validar:"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:234
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:223
 msgid "Delete Material?"
 msgstr "¿Eliminar Material?"
 
-#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:235
+#: virtualrooms/templates/virtualrooms/virtualroom_material_edit_form.html:224
 msgid "Confirm to permanently delete this file:"
 msgstr "Confirma la eliminación permanente de este archivo:"
 
@@ -589,18 +630,26 @@ msgid "download"
 msgstr "descargar"
 
 #: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:112
+msgid ""
+"Thank you! Please click on the button to go to the virtual room and remember "
+"to check if there are any supporting materials for the session."
+msgstr ""
+"¡Gracias! Haz clic en el botón para ir a la sala virtual y recuerda omprobar "
+"si hay algún material de apoyo para la sesión."
+
+#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:163
 msgid "Days"
 msgstr "Días"
 
-#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:113
+#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:164
 msgid "Hours"
 msgstr "Horas"
 
-#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:114
+#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:165
 msgid "Minutes"
 msgstr "Minutos"
 
-#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:115
+#: virtualrooms/templates/virtualrooms/virtualroompage_detail.html:166
 msgid "Seconds"
 msgstr "Segundos"
 
@@ -612,22 +661,42 @@ msgstr "Ver Sala"
 msgid "Edit"
 msgstr "Editar"
 
-#: virtualrooms/views.py:62
+#: virtualrooms/templates/virtualrooms/virtualroompage_list.html:22
+msgid "Attendees List"
+msgstr "Lista de Asistentes"
+
+#: virtualrooms/views.py:61
 msgid "Create Virtual Room"
 msgstr "Crear Sala Virtual"
 
-#: virtualrooms/views.py:63
+#: virtualrooms/views.py:62
 msgid "Create Virtual Room Access Page"
 msgstr "Crear Página de Acceso a Sala Virtual"
 
-#: virtualrooms/views.py:110 virtualrooms/views.py:111
+#: virtualrooms/views.py:108 virtualrooms/views.py:109
 msgid "Update Virtual Room Page"
 msgstr "Actualizar Página de la Sala Virtual"
 
-#: virtualrooms/views.py:146
+#: virtualrooms/views.py:140
 msgid "Virtual Room"
 msgstr "Sala Virtual"
 
-#: virtualrooms/views.py:245
+#: virtualrooms/views.py:217
 msgid "File saved correctly."
 msgstr "El archivo se ha guardado correctamente."
+
+#: virtualrooms/views.py:233
+msgid ""
+"Please enter your name and e-mail address to identify yourself and give you "
+"access to the virtual room."
+msgstr ""
+"Por favor escribe tu nombre y correo electrónico para identificarse y poder "
+"acceder a la sala virtual."
+
+#: virtualrooms/views.py:235
+msgid "Send"
+msgstr "Enviar"
+
+#: virtualrooms/views.py:256
+msgid "Attendees Resgistrations"
+msgstr "Asistentes Reegistrados"

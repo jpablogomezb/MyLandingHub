@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'virtualrooms',
     'moreinfos',
     'signups',
+    'attendees',
 ]
 
 SITE_ID = 1

@@ -30,9 +30,6 @@ class MoreInfoListView(LoginRequiredMixin, ListView):
 		return context
 
 	def get_queryset(self):
-		#activity_id = self.kwargs['pk']
 		activity = get_object_or_404(LandingPage, id=self.kwargs['pk'])
-		#activity = .objects.get(id=activity_id)
-		queryset = MoreInfo.objects.filter(obj_interest_id=activity.id).order_by('timestamp')
-		#queryset = BookingMessage.objects.filter(booking=activity).order_by('-created')
+		queryset = MoreInfo.objects.filter(obj_interest_id=activity.id).order_by('-timestamp')
 		return queryset

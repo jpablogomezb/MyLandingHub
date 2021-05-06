@@ -183,7 +183,7 @@
 <br>
 
 <!-- Here starts the modal forms -->
-  <div id="form-modal" class="modal fade bs-example-modal-md" role="dialog" aria-labelledby="myLargeModalLabel" >
+  <div id="form-modal" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" >
               <div class="modal-dialog modal-md">
                   <div class="modal-content">
                       <div id="form-modal-body" class="modal-body">
@@ -196,7 +196,7 @@
 {% include 'footer.html' %}
 {% endblock %}
 {% block js %}
-<script>
+<script> 
 
 var formAjaxSubmit = function(form, modal) {
               $(modal).find('.modal-body #landing_id').val({{object.id}});

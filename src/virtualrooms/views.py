@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404
-from django.urls import reverse
+from django.http import HttpResponseRedirect, Http404
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
@@ -14,7 +14,6 @@ from mailer import send_mail, send_html_mail
 from django import forms
 
 from landinghub.utils import check_in_memory_mime
-#from moreinfos.forms import MoreInfoForm
 
 from django.views.generic import (
 	CreateView,
@@ -26,8 +25,8 @@ from django.views.generic import (
 )
 from django.views.generic.edit import FormMixin
 
-from .models import VirtualRoomPage, SessionMaterial
-from .forms import VirtualRoomPageForm, VirtualRoomMaterialUploaForm
+from .models import VirtualRoomPage, SessionMaterial, AttendeeVroom
+from .forms import VirtualRoomPageForm, VirtualRoomMaterialUploaForm, VirtualRoomAttendeeForm
 
 #Project Vars
 project_logo = settings.PROJECT_LOGO
@@ -83,7 +82,6 @@ class VirtualRoomPageCreateView(LoginRequiredMixin, CreateView):
 		instance.save()
 		return super(VirtualRoomPageCreateView, self).form_valid(form)
 
-
 class VirtualRoomPageUpdateView(LoginRequiredMixin, UpdateView):
 	model = VirtualRoomPage
 	form_class = VirtualRoomPageForm
@@ -131,10 +129,6 @@ class VirtualRoomPageUpdateView(LoginRequiredMixin, UpdateView):
 		instance.save()
 		return super(VirtualRoomPageUpdateView, self).form_valid(form)
 
-	# def form_valid(self, form):
-	# 	print(form.cleaned_data)
-	# 	return super().form_valid(form)
-
 class VirtualRoomPageDeleteView(LoginRequiredMixin, DeleteView,):
 	queryset = VirtualRoomPage.objects.all()
 
@@ -151,41 +145,30 @@ class VirtualRoomPageDeleteView(LoginRequiredMixin, DeleteView,):
 
 class VirtualRoomPageListView(LoginRequiredMixin, ListView):
 	#template_name = ''
-	#queryset = LandingPage.objects.all()
+	#queryset = ''
 
 	def get_context_data(self, **kwargs):
-		# Call the base implementation first to get a context
 		context = super(VirtualRoomPageListView, self).get_context_data(**kwargs)
 		context['project_logo'] = project_logo
 		context['project_name'] = project_name
 		context['title'] = _('My Virtual Rooms')
-
 		return context
 
 	def get_queryset(self):
-		#activity_id = self.kwargs['pk']
-		#activity = .objects.get(id=activity_id)
 		queryset = VirtualRoomPage.objects.filter(owner=self.request.user).order_by('name')
-		#queryset = BookingMessage.objects.filter(booking=activity).order_by('-created')
 		return queryset
 
 def virtualroom_page(request, slug):
 	context = {}
 	landing = get_object_or_404(VirtualRoomPage, slug=slug)
 	title = _("%s") %(landing.name)
-	#virtualroom = VirtualRoomPage.objects.get(id=self.kwargs['pk'])
 	files = SessionMaterial.objects.filter(session=landing, active=True).order_by('-updated')
 	context = {
 	    "object": landing,
 	    "files_list": files,
-	    #"file": render_file,
 		"title": title,
-	    #"btn_submit": btn_submit,
-	    #"form": form,
-	    #"confirm_message": confirm_message
 			}
 	return render(request, "virtualrooms/virtualroompage_detail.html", context)
-
 
 class VirtualRoomMaterialUploadView(FormView):
 	template_name = 'virtualrooms/virtualroom_material_edit_form.html'
@@ -201,8 +184,6 @@ class VirtualRoomMaterialUploadView(FormView):
 		return super(VirtualRoomMaterialUploadView, self).dispatch(request, *args, **kwargs)
 
 	def get_success_url(self):
-	    #activity = Activity.objects.get(id=self.kwargs['pk'])
-	    #virtualroom = VirtualRoomPage.objects.get(id=self.kwargs['pk'])
 	    return reverse('virtualrooms:virtualroom-materials', kwargs={'pk': self.kwargs['pk']})
 
 	def get_context_data(self, **kwargs):
@@ -232,15 +213,52 @@ class VirtualRoomMaterialUploadView(FormView):
 	            instance.file_type = 'ppt'
 	        else:
 	            pass
-	    #print(instance.file_type)
-	    #instance.save()
-	    # if instance.active == True:
-	    #     all_gifts = ActivityGift.objects.filter(activity=activity)
-	    #     for file in all_gifts:
-	    #         if file.active == True:
-	    #             file.active = False
-	    #             file.save()
-	        #instance.active = True
 	    instance.save()
 	    messages.add_message(self.request, messages.SUCCESS, _('File saved correctly.'))
 	    return super(VirtualRoomMaterialUploadView, self).form_valid(form)
+
+
+class VirtualRoomAttendeeSignupView(SuccessMessageMixin, AjaxTemplateMixin, CreateView):
+	template_name = 'virtualrooms/virtualroom_signup_form.html'
+	form_class = VirtualRoomAttendeeForm
+	success_url = reverse_lazy('home')
+
+	def dispatch(self, request, *args, **kwargs):
+	    landing = get_object_or_404(VirtualRoomPage, id=self.kwargs['pk'])
+	    return super(VirtualRoomAttendeeSignupView, self).dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+	    context = super(VirtualRoomAttendeeSignupView, self).get_context_data(**kwargs)
+	    context['landing_id'] = self.kwargs['pk']
+	    context['main_header'] = _('Please enter your name and e-mail address to identify yourself and give you access to the virtual room.')
+	    #context['sub_header'] = _('By subscribing to the Newsletter we will notify you of special discounts and new product launches')
+	    form_btn_text = _("Send")
+	    context['btn_submit'] = form_btn_text
+	    return context
+
+	def form_valid(self, form):
+		instance = form.save(commit=False)
+		email = form.cleaned_data.get("email")
+		fname = form.cleaned_data['name']
+		if not form.cleaned_data['name']:
+			fname = '-'
+		instance.session = VirtualRoomPage.objects.get(id=self.kwargs['pk'])
+		#phone = instance.phone_number
+		instance.save()
+		return HttpResponseRedirect(self.success_url)
+
+class VirtualRoomAttendeeListView(LoginRequiredMixin, ListView):
+	
+	def get_context_data(self, **kwargs):
+		context = super(VirtualRoomAttendeeListView, self).get_context_data(**kwargs)
+		context['project_logo'] = project_logo
+		context['project_name'] = project_name
+		context['title'] = _('Attendees Resgistrations')
+		landing = get_object_or_404(VirtualRoomPage, id=self.kwargs['pk'])
+		context['landing'] = landing
+		return context
+
+	def get_queryset(self):
+		landing = get_object_or_404(VirtualRoomPage, id=self.kwargs['pk'])
+		queryset = AttendeeVroom.objects.filter(session=landing).order_by('-timestamp')
+		return queryset

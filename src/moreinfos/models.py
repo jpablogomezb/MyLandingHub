@@ -23,3 +23,4 @@ class MoreInfo(models.Model):
     		return "%s %s %s" %(self.name, "is interested in product ID.:", self.obj_interest_id)
     	else:
     		return "%s %s" %(self.email, "is interested in product ID.:", self.obj_interest_id)
+

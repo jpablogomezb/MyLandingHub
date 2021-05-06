@@ -1,0 +1,28 @@
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load tz %}
+<div class="row">
+	<div class="col-sm-12 col-xs-12">
+		<div class="panel">
+			<br>
+		  	<div class="panel-body">
+					<div style="text-align:center">
+						<h4><b>{{main_header}}</h4></b>
+						<br>
+						<small>{{sub_header}}</small>
+					</div>
+					<br>
+          {% if form %}
+		{{ form.media }}
+			<form class="form-horizontal" method='POST' action="{% url 'virtualrooms:attendee-signup' landing_id %}">{% csrf_token %}
+					{{ form | crispy }}
+					<br>
+					<input type='submit' value= "{{btn_submit}} &raquo;" class='btn btn-block btn-success btn-lg' ></input>
+			</form>
+		{% endif %}
+        </div>
+    </div>
+	</div>
+</div>
+{% block js %}
+{% endblock %}

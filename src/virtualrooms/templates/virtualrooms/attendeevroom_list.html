@@ -6,9 +6,20 @@
 {% include "navbar.html" %}
 <br>
 <main role="main">
+	{% if messages %}
+  <!-- messages -->
+  <div class="container">
+      {% for message in messages %}
+      <div class="alert alert-dismissible {% if 'error' in message.tags %} alert-danger {% else %} alert-{{ message.tags }} {% endif %}">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          {{ message }}
+      </div>
+      {% endfor %}
+  </div>
+  {% endif %}
 	<div class="jumbotron">
 			<div class="text-center">
-	        	<h4><b>{% trans 'More information about' %}</b> <br>{{landing}}</h4> 
+	        	<h4><b>{% trans 'Attendees Registrations for' %}</b> <br>{{landing}}</h4> 
 	        </div>
 	  		<br>
 	        <div>
@@ -16,11 +27,10 @@
 	        {% if object_list %}
 			<table class="table table-bordered table-sm text-center">
 			  <thead>
-			    <tr>	
+			    <tr>
 			      <th scope="col">{% trans 'E-mail' %}</th>
 			      <th scope="col">{% trans 'Name' %} </th>
 			      <th scope="col">{% trans 'Phone Number' %}</th>
-			      <th scope="col">{% trans 'User' %}</th>
 			      <th scope="col">{% trans 'When?' %}</th>
 			    </tr>
 			  </thead>
@@ -30,18 +40,17 @@
 			      <td>{{object.email}}</td>
 			      <td>{{object.name|default_if_none:"--"}}</td>
 			      <td>{{object.phone_number|default_if_none:"--"}}</td>
-			      <td>{{object.user|default_if_none:"--"}}</td>
 			      <td>{{object.timestamp}}</td>
 			    </tr>
 			    {% endfor %}
 			  </tbody>
 			</table>			
 			{% else %}
-			<h6 class="text-center"><b>{% trans 'Sorry, no subscribers via this Landing Page.' %}</b></h6>
+			<h6 class="text-center"><b>{% trans 'Sorry, there were no attendees registered through this virtual room access page' %}</b></h6>
 			{% endif %}
 		 </div>
-		</div>
-		<a href="{% url 'landings:landing-list' %}"  style="float:left;" class="btn btn-primary btn-sm">&laquo; {% trans 'My Landing Pages'%}</a>
+		 </div>
+		 <a href="{% url 'virtualrooms:virtualroom-list' %}"  style="float:left;" class="btn btn-primary btn-sm">&laquo; {% trans 'My Virtual Rooms'%}</a>
 	</div>
 	
 {% include 'footer.html' %} 

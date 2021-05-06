@@ -37,7 +37,6 @@ class AjaxTemplateMixin(object):
             self.template_name = self.ajax_template_name
         return super(AjaxTemplateMixin, self).dispatch(request, *args, **kwargs)
 
-
 class NewsletterSignupView(SuccessMessageMixin, AjaxTemplateMixin, CreateView):
 	#model = SignUp
 	template_name = 'signups/newsletter_popup_form.html'
@@ -123,19 +122,7 @@ class NewsletterSignupListView(LoginRequiredMixin, ListView):
 		return context
 
 	def get_queryset(self):
-		#activity_id = self.kwargs['pk']
 		activity = get_object_or_404(LandingPage, id=self.kwargs['pk'])
-		#activity = .objects.get(id=activity_id)
-		queryset = SignUp.objects.filter(obj_interest_id=activity.id).order_by('timestamp')
-		#queryset = BookingMessage.objects.filter(booking=activity).order_by('-created')
+		queryset = SignUp.objects.filter(obj_interest_id=activity.id).order_by('-timestamp')
 		return queryset
-
-
-
-
-
-
-
-
-
 
